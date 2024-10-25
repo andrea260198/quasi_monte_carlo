@@ -20,9 +20,9 @@ def get_pseudo_rnd_sample(M: int) -> npt.NDArray[np.float64]:
     return normal_sample
 
 
-def calc_cutoff(get_sample: Callable[[int], npt.NDArray[np.float64]], M: int, thresold: float) -> float:
+def calc_cutoff(get_sample: Callable[[int], npt.NDArray[np.float64]], M: int, threshold: float) -> float:
     sample = get_sample(M)
-    p = sum(sample > thresold) / M
+    p = sum(sample > threshold) / M
     return p
 
 
