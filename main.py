@@ -33,4 +33,5 @@ if __name__ == '__main__':
     plt.plot(MM, list(map(lambda M: calc_var(get_pseudo_rnd_sample, M, threshold), MM)), "k")
     plt.plot(MM, list(map(lambda M: calc_var(get_low_discr_sample, M, threshold), MM)), "r")
     plt.plot(MM, np.ones(MM.shape) * (1 - norm.cdf(threshold)), "k-")
+    plt.legend(["Monte Carlo", "Quasi-Monte Carlo"])
     plt.show()
