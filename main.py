@@ -7,7 +7,7 @@ from typing import Callable
 import numpy.typing as npt
 
 
-def get_low_discr_sample(M: int):
+def get_low_discr_sample(M: int) -> npt.NDArray[np.float64]:
     sampler = qmc.Sobol(d=1, scramble=False)
     sobol_sample = sampler.random(M)
     normal_sample = norm.ppf(sobol_sample)
@@ -15,12 +15,12 @@ def get_low_discr_sample(M: int):
     return normal_sample
 
 
-def get_pseudo_rnd_sample(M: int):
+def get_pseudo_rnd_sample(M: int) -> npt.NDArray[np.float64]:
     normal_sample = numpy.random.normal(size=M)
     return normal_sample
 
 
-def calc_var(get_sample: Callable[[int], npt.NDArray[np.float64]], M: int, thresold: float):
+def calc_var(get_sample: Callable[[int], npt.NDArray[np.float64]], M: int, thresold: float) -> float:
     sample = get_sample(M)
     p = sum(sample > thresold) / M
     return p
