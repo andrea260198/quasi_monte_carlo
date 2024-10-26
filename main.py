@@ -20,7 +20,7 @@ def get_pseudo_rnd_sample(M: int) -> npt.NDArray[np.float64]:
     return normal_sample
 
 
-def calc_cutoff(sample: npt.NDArray, threshold: float) -> float:
+def calc_cutoff(sample: npt.NDArray[np.float64], threshold: float) -> float:
     p = sum(sample > threshold) / len(sample)
     return p
 
