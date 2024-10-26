@@ -3,8 +3,8 @@ from scipy.stats import qmc
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 import numpy as np
-from typing import Callable
 import numpy.typing as npt
+# TODO: use 'pipe' package
 
 
 def get_low_discr_sample(M: int) -> npt.NDArray[np.float64]:
@@ -20,9 +20,8 @@ def get_pseudo_rnd_sample(M: int) -> npt.NDArray[np.float64]:
     return normal_sample
 
 
-def calc_cutoff(get_sample: Callable[[int], npt.NDArray[np.float64]], M: int, threshold: float) -> float:
-    sample = get_sample(M)
-    p = sum(sample > threshold) / M
+def calc_cutoff(sample: npt.NDArray, threshold: float) -> float:
+    p = sum(sample > threshold) / len(sample)
     return p
 
 
@@ -30,8 +29,8 @@ if __name__ == '__main__':
     threshold = 2.0
     MM = np.arange(10, 10_000, 100, dtype=int)
 
-    plt.plot(MM, list(map(lambda M: calc_cutoff(get_pseudo_rnd_sample, M, threshold), MM)), "k")
-    plt.plot(MM, list(map(lambda M: calc_cutoff(get_low_discr_sample, M, threshold), MM)), "r")
+    plt.plot(MM, list(map(lambda M: calc_cutoff(get_pseudo_rnd_sample(M), threshold), MM)), "k")
+    plt.plot(MM, list(map(lambda M: calc_cutoff(get_low_discr_sample(M), threshold), MM)), "r")
     plt.plot(MM, np.ones(MM.shape) * (1 - norm.cdf(threshold)), "k-")
     plt.legend(["Monte Carlo", "Quasi-Monte Carlo"])
     plt.show()
